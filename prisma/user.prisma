@@ -1,0 +1,10 @@
+model User {
+    id String @id @default(uuid())
+    name String
+    email String
+    password String
+    avatar String?
+    role Role  @default(USER)
+    createAt DateTime @default(now())
+    updateAt DateTime
+}

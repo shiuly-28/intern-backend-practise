@@ -11,8 +11,8 @@ const response : ErrorResponse = {
 }
 
 if(process.env.node_environment === "development"){
-    response.stack == err.stack
-    response.error == err
+    response.stack = err.stack
+    response.error = err
 }
 res.status(statusCode).json(response)
 }
