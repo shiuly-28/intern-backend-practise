@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { authService } from "./auth.service.js";
-import { catchhAsync } from "../../utils/catchAsync.js";
+import { catchAsync } from "../../utils/catchAsync.js";
 import { apiResponse } from "../../utils/apiResponse.js";
 
-const login = catchhAsync((req: Request, res: Response) => {
+const login = catchAsync((req: Request, res: Response) => {
     const {email, password} = req.body;
 })
 
@@ -21,6 +21,11 @@ const result = (req : Request, res : Response) => {
 }
 
 
+const registerUser = catchAsync(async (req: Request, res: Response)=> {
+    const result = await authService.registerUser(req.body)
+    apiResponse.success(res, result, "Res=gister Succesfull")
+})
 export const authControler = {
-    login
+    login,
+    registerUser
 }
