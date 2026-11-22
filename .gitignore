@@ -20,3 +20,7 @@ node_modules
 
 /src/generated/prisma
 >>>>>>> ea50b7f (config file resolved)
+
+# Environment variables & secrets (added by GitHub Guardian)
+.env
+.env.*
