@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt'
 import { Ilogin, RegisterUser } from "./auth.types.js"
 import { ApiError } from "../../utils/apiError.js"
 import { prisma } from '../../config/prisma.config.js';
+import {sendEmail} from '../../utils/email/sendEmail.js'
+import { welcomeEmailTemplate } from '../../utils/email/emailTemplates.js';
 
 const login = (payload : Ilogin) => {
     const {email, password} = payload
@@ -33,6 +35,7 @@ const registerUser = async(payload: RegisterUser) => {
     }
     const hashedPasssword = await bcrypt.hash(payload.password, 10)
 
+    //update to  db
     const newUser = await prisma.user.create({
         data: {
             name: payload.name,
@@ -41,8 +44,21 @@ const registerUser = async(payload: RegisterUser) => {
         },
         omit: {
             password: true
-        }
+        },
     });
+    console.log("User Register Successfully")
+
+    // send welcome email
+    try{
+        await sendEmail({
+            to:newUser.email,
+            subject: "welcome to Rise Tgether",
+            html: welcomeEmailTemplate(newUser.name),
+        });
+        console.log("email send successfully....")
+    }catch(error){
+        console.log("email send error: ", error)
+    }
     return newUser
 }
 
