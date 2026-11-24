@@ -10,8 +10,6 @@ config.bat
 node_modules
 =======
 # Environment variables & secrets (added by GitHub Guardian)
-.env
-.env.*
 *.env
 !.env.example
 !.env.sample
@@ -22,3 +20,5 @@ node_modules
 
 /src/generated/prisma
 >>>>>>> ea50b7f (config file resolved)
+
+# Environment variables & secrets (added by GitHub Guardian)
