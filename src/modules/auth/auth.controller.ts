@@ -20,11 +20,12 @@ const result = (req : Request, res : Response) => {
     apiResponse.success(res, result, "login successfull")
 }
 
-
+// const register = catchAsync()
 const registerUser = catchAsync(async (req: Request, res: Response)=> {
     const result = await authService.registerUser(req.body)
     apiResponse.success(res, result, "Res=gister Succesfull")
 })
+
 export const authControler = {
     login,
     registerUser

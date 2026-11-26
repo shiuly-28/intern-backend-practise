@@ -22,3 +22,7 @@ node_modules
 >>>>>>> ea50b7f (config file resolved)
 
 # Environment variables & secrets (added by GitHub Guardian)
+
+# Environment variables & secrets (added by GitHub Guardian)
+.env
+.env.*

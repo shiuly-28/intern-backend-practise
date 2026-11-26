@@ -5,6 +5,7 @@ import { ApiError } from "../../utils/apiError.js"
 import { prisma } from '../../config/prisma.config.js';
 import {sendEmail} from '../../utils/email/sendEmail.js'
 import { welcomeEmailTemplate } from '../../utils/email/emailTemplates.js';
+import {uploadImage} from '../../utils/imgeUpload.js'
 
 const login = (payload : Ilogin) => {
     const {email, password} = payload
@@ -24,7 +25,16 @@ const login = (payload : Ilogin) => {
 }
 
 // register
-const registerUser = async(payload: RegisterUser) => {
+const registerUser = async(payload: RegisterUser, avatarBuffer? : Buffer) => {
+
+    let avatarKey : string | null = null;
+    let avatarUrl : string | null = null;
+
+    if (avatarBuffer) {
+        const uploaded = await uploadImage(avatarBuffer, { folder: "avatar"})
+        avatarKey = uploaded.key;
+        avatarUrl = uploaded.url;
+    }
 
     const isExistUser = await prisma.user.findUnique({
         where: {email: payload.email}
@@ -41,6 +51,8 @@ const registerUser = async(payload: RegisterUser) => {
             name: payload.name,
             email: payload.email,
             password: hashedPasssword,
+            avatarKey,
+            avatarUrl,
         },
         omit: {
             password: true
